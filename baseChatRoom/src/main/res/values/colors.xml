@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- C2C Chat -->
+    <color name="c2c_chat_notification_bg">#196787ff</color>
+
+    <!-- Contact record -->
+    <color name="contact_record_received_text_bg">#eeeeee</color>
+    <color name="contact_record_received_text">#6d7278</color>
+    <color name="contact_record_sent_text_bg">#fa6400</color>
+    <color name="contact_record_sent_text">#ffffff</color>
+    <color name="contact_record_text">#6d7278</color>
+    <color name="contact_pic_bg">#1e1e1e</color>
+    <color name="contact_pic_num_bg">#801e1e1e</color>
+    <color name="contact_record_picture_bg">#4d000000</color>
+
+</resources>
