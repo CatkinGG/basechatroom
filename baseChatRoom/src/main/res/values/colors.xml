@@ -13,4 +13,15 @@
     <color name="contact_pic_num_bg">#801e1e1e</color>
     <color name="contact_record_picture_bg">#4d000000</color>
 
+    <color name="nav_text">#6d7278</color>
+    <color name="colorPrimary">#fa6400</color>
+
+    <color name="market_quoatation_tab_text_color">#6d7278</color>
+    <color name="market_quoatation_tab_text_selected_color">#ffffff</color>
+
+    <color name="gradient_start_disable">#66fa6400</color>
+    <color name="dialog_confirm">#fa6400</color>
+
+    <color name="account_validate_text_resent_enable">#ffffff</color>
+    <color name="account_validate_text_resent_disable">#e02020</color>
 </resources>
