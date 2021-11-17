@@ -54,7 +54,7 @@ open class BaseSentImageViewHolder(itemView: View) : MessageViewHolder(itemView)
 
     }
 
-    private fun loadImage(src: String, imageView: ImageView) {
+    open fun loadImage(src: String, imageView: ImageView) {
         CoroutineScope(Dispatchers.Main).launch {
             flowOf(GeneralUtils.decodeBase64Image(src))
                 .flowOn(Dispatchers.Default)

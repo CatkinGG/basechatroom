@@ -1,8 +1,8 @@
 package com.dabenxiang.jys.basechatroom.ui.main
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.View
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.paging.CombinedLoadStates
 import androidx.paging.LoadState
@@ -88,7 +88,17 @@ class ChatFragment : Fragment(R.layout.chat_fragment) {
             ChatMsg(1,2,"TEST",202110281700, ChatMessageType.TEXT, true),
             ChatMsg(2,2,"u catkingg?",202110281700, ChatMessageType.TEXT, true),
             ChatMsg(3,2,"hihi",202111031900, ChatMessageType.TEXT, true),
-            ChatMsg(4,0,"catkingg is me",202111032000, ChatMessageType.TEXT, true)
+            ChatMsg(4,0,"catkingg is me",202111032000, ChatMessageType.TEXT, true),
+            ChatMsg(5,0,"1+1 = 2",202111171700, ChatMessageType.TEXT, true),
+            ChatMsg(6,0,"2+2 = 4",202111171700, ChatMessageType.TEXT, true),
+            ChatMsg(7,0,"3+3 = ?",202111171900, ChatMessageType.TEXT, true),
+            ChatMsg(8,2,"66666666",202111172000, ChatMessageType.TEXT, true),
+            ChatMsg(9,2,"77777777",202111173000, ChatMessageType.TEXT, true),
+            ChatMsg(10,2,"88888888",202111174000, ChatMessageType.TEXT, true),
+            ChatMsg(11,2,"99999999",202111175000, ChatMessageType.TEXT, true),
+            ChatMsg(12,0,"滾!",202111176000, ChatMessageType.TEXT, true),
+            ChatMsg(13,0,"https://truth.bahamut.com.tw/s01/202004/1dea58fbfef9d160a3fea574f51070a3.JPG" ,202111177000, ChatMessageType.PICTURE, true),
+            ChatMsg(14,2,"https://s.yimg.com/ny/api/res/1.2/nIrraUXNlV4Oyhhdj024rQ--/YXBwaWQ9aGlnaGxhbmRlcjt3PTY0MDtoPTM2MA--/https://s.yimg.com/uu/api/res/1.2/_d3IeF4GgXJxVGyDybiy9w--~B/aD02NzU7dz0xMjAwO2FwcGlkPXl0YWNoeW9u/https://media.zenfs.com/zh-tw/nownews.com/abe3b6228c4481b2bb895027e93407cb",202111178000, ChatMessageType.PICTURE, true)
         )
         rv_chat_content.also {
             it.setHasFixedSize(true)
