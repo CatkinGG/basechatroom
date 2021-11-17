@@ -10,6 +10,7 @@ import androidx.room.withTransaction
 import com.dabenxiang.jys.basechatroom.model.db.ChatMsg
 import com.dabenxiang.jys.basechatroom.model.db.ChatRoomDatabase
 import com.dabenxiang.jys.basechatroom.ui.main.ChatContentPagingSource.Companion.NETWORK_PAGE_SIZE
+import com.dabenxiang.jys.chat.ChatMessage
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.flow
@@ -30,14 +31,13 @@ class ChatViewModel @ViewModelInject constructor(
                 enablePlaceholders = false
             )
         ) {
-            ChatContentPagingSource(
-            )
+            ChatContentPagingSource(chatRoomDatabase)
         }.flow
             .cachedIn(viewModelScope)
             .asLiveData()
-            .let { it as MutableLiveData<PagingData<ChatMsg>> }
+            .let { it as MutableLiveData<PagingData<ChatRoomMessage>> }
     }
-    val pagingDataViewStates: LiveData<PagingData<ChatMsg>> = _pagingDataViewStates
+    val pagingDataViewStates: LiveData<PagingData<ChatRoomMessage>> = _pagingDataViewStates
 
     fun read() {
         viewModelScope.launch {

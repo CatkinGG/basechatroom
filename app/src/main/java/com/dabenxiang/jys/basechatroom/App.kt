@@ -1,7 +1,9 @@
 package com.dabenxiang.jys.basechatroom
 
 import android.app.Application
+import com.dabenxiang.jys.basechatroom.widget.log.DebugLogTree
 import dagger.hilt.android.HiltAndroidApp
+import timber.log.Timber
 
 @HiltAndroidApp
 class App : Application() {
@@ -15,6 +17,11 @@ class App : Application() {
 
     init {
         self = this
+    }
+
+    override fun onCreate() {
+        super.onCreate()
+        Timber.plant(DebugLogTree())
     }
 
 }

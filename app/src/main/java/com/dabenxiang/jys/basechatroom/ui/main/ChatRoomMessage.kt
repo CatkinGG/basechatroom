@@ -1,5 +1,6 @@
 package com.dabenxiang.jys.basechatroom.ui.main
 
+import com.dabenxiang.jys.basechatroom.model.db.ChatMsg
 import com.dabenxiang.jys.basechatroom.ui.main.enums.ChatMessageType
 import com.dabenxiang.jys.chat.ChatMessage
 
@@ -32,6 +33,16 @@ class ChatRoomMessage(
 ): ChatMessage(id, userID, message, createdAt)
 {
     companion object {
+        fun build(origin: ChatMsg): ChatRoomMessage {
+            return ChatRoomMessage(
+                id = origin.id?:-1,
+                userID = origin.userID?:-1,
+                messageType = origin.messageType?: ChatMessageType.TEXT,
+                message = origin.message?: "",
+                isRead = origin.isRead?: true,
+                createdAt = origin.createdAt?:""
+            )
+        }
     }
 
     override fun getImageUrl(): String? {

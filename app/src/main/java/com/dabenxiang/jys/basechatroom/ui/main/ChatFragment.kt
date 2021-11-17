@@ -84,7 +84,12 @@ class ChatFragment : Fragment(R.layout.chat_fragment) {
     }
 
     fun setupUI() {
-        viewModel.insert(ChatMsg(1,2,"catkingg",202110281700, ChatMessageType.TEXT, true))
+        viewModel.insert(
+            ChatMsg(1,2,"TEST",202110281700, ChatMessageType.TEXT, true),
+            ChatMsg(2,2,"u catkingg?",202110281700, ChatMessageType.TEXT, true),
+            ChatMsg(3,2,"hihi",202111031900, ChatMessageType.TEXT, true),
+            ChatMsg(4,0,"catkingg is me",202111032000, ChatMessageType.TEXT, true)
+        )
         rv_chat_content.also {
             it.setHasFixedSize(true)
             it.adapter = chatContentAdapter
