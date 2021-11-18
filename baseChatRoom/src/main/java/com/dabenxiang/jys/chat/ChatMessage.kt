@@ -18,5 +18,5 @@ abstract class ChatMessage(
      */
     val createdAt: Any = (System.currentTimeMillis() / 1000).toString()
 ){
-    abstract fun getImageUrl(): String?
+    abstract fun getImageByteArray(): String?
 }

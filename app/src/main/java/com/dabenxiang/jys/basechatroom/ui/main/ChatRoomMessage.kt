@@ -45,7 +45,7 @@ class ChatRoomMessage(
         }
     }
 
-    override fun getImageUrl(): String? {
+    override fun getImageByteArray(): String? {
         if(messageType == ChatMessageType.PICTURE)
             return message
         else

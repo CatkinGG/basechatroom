@@ -33,7 +33,7 @@ open class BaseSentImageViewHolder(itemView: View) : MessageViewHolder(itemView)
         tvTime?.text =
                 GeneralUtils.convertTimestampToString(item.createdAt.toString().toLongOrNull() ?: 0)
 
-        item.getImageUrl()?.takeIf { it.contains(BITMAPS_SEPARATOR) }?.run {
+        item.getImageByteArray()?.takeIf { it.contains(BITMAPS_SEPARATOR) }?.run {
             val bitmapStrings = this.split(BITMAPS_SEPARATOR) as ArrayList<String>
             loadImage(bitmapStrings[0], iv1)
             loadImage(bitmapStrings[1], iv2)

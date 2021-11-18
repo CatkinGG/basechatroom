@@ -597,7 +597,7 @@ class MessageHolders {
             val hasContent = hasContentFor(message, config.type)
             if (hasContent) return config.type
             }
-        return if(message.getImageUrl() != null) VIEW_TYPE_IMAGE_MESSAGE
+        return if(message.getImageByteArray() != null) VIEW_TYPE_IMAGE_MESSAGE
         else VIEW_TYPE_TEXT_MESSAGE
     }
 }

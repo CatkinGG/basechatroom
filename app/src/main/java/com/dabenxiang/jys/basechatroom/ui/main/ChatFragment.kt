@@ -9,6 +9,7 @@ import androidx.paging.LoadState
 import androidx.paging.PagingData
 import com.dabenxiang.jys.basechatroom.R
 import com.dabenxiang.jys.basechatroom.model.db.ChatMsg
+import com.dabenxiang.jys.basechatroom.ui.main.contactpicture.ContactPictureDialogFragment
 import com.dabenxiang.jys.basechatroom.ui.main.enums.ChatMessageType
 import com.dabenxiang.jys.basechatroom.ui.main.interfaces.InteractionListener
 import com.dabenxiang.jys.chat.ChatContentFuncItem
@@ -113,14 +114,17 @@ class ChatFragment : Fragment(R.layout.chat_fragment) {
     }
 
     private fun onPictureClick(chatMsg: ChatMessage) {
-//        val msg = Msg(
-//            messages = if(chatMsg.message.contains(BITMAPS_SEPARATOR))
-//                chatMsg.message.split(BITMAPS_SEPARATOR ) as ArrayList<String>
-//            else arrayListOf(chatMsg.message)
-//        )
-//        ContactPictureDialogFragment(msg).show(
-//            requireActivity().supportFragmentManager,
-//            this::class.java.simpleName
-//        )
+        val msg = ChatMsg(
+            chatMsg.id,
+            chatMsg.userID,
+            chatMsg.message,
+            chatMsg.createdAt.toString().toLong(),
+            if(chatMsg.getImageByteArray() != null) ChatMessageType.PICTURE else ChatMessageType.TEXT,
+            true
+        )
+        ContactPictureDialogFragment(msg).show(
+            requireActivity().supportFragmentManager,
+            this::class.java.simpleName
+        )
     }
 }
