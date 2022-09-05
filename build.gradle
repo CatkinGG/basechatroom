@@ -17,6 +17,9 @@ buildscript {
         hilt_jetpack_version = '1.0.0-alpha02'
         room_version = '2.3.0'
         timber_version = '4.7.1'
+        apolloVersion = '2.4.1'
+        okhttp_version = '4.9.0'
+        okhttp_interceptor_version = '4.9.0'
     }
     repositories {
         google()
@@ -29,6 +32,10 @@ buildscript {
 
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
+
+        // Apollo
+        // This must be AFTER com.android.tools
+        classpath "com.apollographql.apollo:apollo-gradle-plugin:$apolloVersion"
     }
 }
 

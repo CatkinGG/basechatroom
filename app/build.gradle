@@ -1,5 +1,8 @@
 plugins {
     id 'com.android.application'
+    // Apollo
+    // This must go AFTER com.android.application plugin and BEFORE Kotlin plugin
+    id 'com.apollographql.apollo'
     id 'kotlin-android'
     id 'kotlin-kapt'
     id 'dagger.hilt.android.plugin'
@@ -75,6 +78,17 @@ dependencies {
     kapt "com.github.bumptech.glide:compiler:$glide_version"
     implementation "com.github.bumptech.glide:okhttp3-integration:$glide_version"
     implementation "com.github.penfeizhou.android.animation:glide-plugin:$apng_version"
+
+    // Apollo - GraphQL
+    implementation "com.apollographql.apollo:apollo-runtime:$apolloVersion"
+    implementation "com.apollographql.apollo:apollo-normalized-cache-sqlite:$apolloVersion"
+    implementation "com.apollographql.apollo:apollo-coroutines-support:$apolloVersion"
+    implementation "com.apollographql.apollo:apollo-rx3-support:$apolloVersion"
+    implementation "com.apollographql.apollo:apollo-api:$apolloVersion"
+
+    // OkHttp
+    implementation "com.squareup.okhttp3:okhttp:$okhttp_version"
+    implementation "com.squareup.okhttp3:logging-interceptor:$okhttp_interceptor_version"
 
     implementation project(':baseChatRoom')
 }

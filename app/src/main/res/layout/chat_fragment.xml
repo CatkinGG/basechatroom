@@ -98,7 +98,7 @@
             android:layout_height="32dp"
             android:layout_marginStart="7dp"
             android:background="@null"
-            android:src="@drawable/btn_send_disable" />
+            android:src="@drawable/btn_send_n" />
     </LinearLayout>
 
     <TextView
