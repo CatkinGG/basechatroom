@@ -1,0 +1,52 @@
+query getAllMessageList {
+    chat_message(order_by: [{create_at: desc}]) {
+        id
+        user_id
+        message
+        create_at
+        message_type
+        is_read
+    }
+}
+
+query getMessageList($limit: Int, $offset: Int) {
+    chat_message(limit: $limit, offset: $offset, order_by: [{create_at: desc}]) {
+        id
+        user_id
+        message
+        create_at
+        message_type
+        is_read
+    }
+}
+
+mutation removeMessageList ($id: Int!) {
+    delete_chat_message(where: {id: {_eq: $id}}) {
+        affected_rows
+    }
+}
+
+mutation updateMessageList ($id: Int!, $message: String!, $is_read: Boolean!) {
+    update_chat_message(where: {id: {_eq: $id}}, _set: {message: $message, is_read: $is_read}) {
+        affected_rows
+        returning {
+            id
+            message
+            is_read
+        }
+    }
+}
+
+mutation addMessageList($user_id: Int!, $message: String!, $message_type: Int!) {
+    insert_chat_message(objects: [{user_id: $user_id, message: $message, message_type: $message_type}]) {
+        affected_rows
+        returning {
+            user_id
+            message
+            create_at
+            message_type
+            is_read
+        }
+    }
+}
+

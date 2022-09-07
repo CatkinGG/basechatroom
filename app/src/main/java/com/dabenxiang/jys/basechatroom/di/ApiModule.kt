@@ -13,7 +13,7 @@ import javax.inject.Singleton
 @Module
 @InstallIn(ApplicationComponent::class)
 object ApiModule {
-    val authHeader = "myadminsecretkey"
+    val authHeader = "SUkQzoUaYUUwkByvYNxlOoRaYCS5pXNjAJpLmL00WbGKQiesHObg2ezUtgx4uML6"
 
     @Qualifier
     @Retention(AnnotationRetention.BINARY)

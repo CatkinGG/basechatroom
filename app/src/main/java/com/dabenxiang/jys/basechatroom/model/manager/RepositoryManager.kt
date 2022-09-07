@@ -3,7 +3,7 @@ package com.dabenxiang.jys.basechatroom.model.manager
 import com.apollographql.apollo.ApolloClient
 import com.apollographql.apollo.api.CustomTypeAdapter
 import com.apollographql.apollo.api.CustomTypeValue
-import com.dabenxiang.jys.basechatroom.model.repository.TodoRepository
+import com.dabenxiang.jys.basechatroom.model.repository.ChatMessageRepository
 import com.hasura.todo.type.CustomType
 import okhttp3.OkHttpClient
 import java.text.ParseException
@@ -13,9 +13,9 @@ import java.text.SimpleDateFormat
 class RepositoryManager(
     private val graphqlOkHttpClient: OkHttpClient
 ) {
-    val domain = "http://35.189.161.175:8080/v1/graphql"
+    val domain = "https://special-louse-50.hasura.app/v1/graphql"
 
-    val todoRepository by lazy { TodoRepository(apolloClient) }
+    val chatMessageRepository by lazy { ChatMessageRepository(apolloClient) }
 
     val dateCustomTypeAdapter = object : CustomTypeAdapter<String> {
         var ISO8601 = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSSSSZ")

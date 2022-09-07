@@ -6,5 +6,9 @@ enum class ChatMessageType(val value: Int) {
     NOTIFICATION(4),
     TRADE_RULE(5),
     DIVIDER(6),
-    UNKNOW(7)
+    UNKNOW(7);
+
+    companion object {
+        fun fromInt(value: Int) = values().first { it.value == value }
+    }
 }

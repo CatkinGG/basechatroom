@@ -7,12 +7,14 @@ import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import androidx.room.withTransaction
+import com.apollographql.apollo.api.Response
 import com.dabenxiang.jys.basechatroom.model.db.ChatMsg
 import com.dabenxiang.jys.basechatroom.model.db.ChatRoomDatabase
 import com.dabenxiang.jys.basechatroom.model.manager.RepositoryManager
 import com.dabenxiang.jys.basechatroom.ui.main.ChatContentPagingSource.Companion.NETWORK_PAGE_SIZE
-import com.dabenxiang.jys.chat.ChatMessage
-import com.hasura.todo.GetAllTodoListQuery
+import com.dabenxiang.jys.basechatroom.ui.main.enums.ChatMessageType
+import com.hasura.todo.AddMessageListMutation
+import com.hasura.todo.GetAllMessageListQuery
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.collect
@@ -25,12 +27,8 @@ class ChatViewModel @ViewModelInject constructor(
     private val repositoryManager: RepositoryManager,
     private val chatRoomDatabase: ChatRoomDatabase
 ): ViewModel() {
-    private val _readMessageDaoResult = MutableLiveData<List<ChatMsg>>()
-    val readMessageDaoResult: LiveData<List<ChatMsg>> =
-        _readMessageDaoResult
-
-    private val _getTodoListResult = MutableLiveData<GetAllTodoListQuery.Data?>()
-    val getTodoListResult: LiveData<GetAllTodoListQuery.Data?> = _getTodoListResult
+    private val _addMessageListResult = MutableLiveData< Response<AddMessageListMutation.Data>>()
+    val addMessageListResult: LiveData<Response<AddMessageListMutation.Data>> = _addMessageListResult
 
     private val _pagingDataViewStates by lazy {
         Pager(
@@ -39,7 +37,7 @@ class ChatViewModel @ViewModelInject constructor(
                 enablePlaceholders = false
             )
         ) {
-            ChatContentPagingSource(chatRoomDatabase)
+            ChatContentPagingSource(repositoryManager)
         }.flow
             .cachedIn(viewModelScope)
             .asLiveData()
@@ -47,35 +45,16 @@ class ChatViewModel @ViewModelInject constructor(
     }
     val pagingDataViewStates: LiveData<PagingData<ChatRoomMessage>> = _pagingDataViewStates
 
-    fun read() {
+    fun addMessage(chatRoomMessage: ChatRoomMessage){
         viewModelScope.launch {
-            flow{
-                val list = chatRoomDatabase.chatMessageDao().getAll()
-                emit(
-                    list
-                )
-            }.flowOn(Dispatchers.IO)
-                .collect {
-                    _readMessageDaoResult.value = it
-                }
-        }
-    }
-
-    fun insert(vararg messages: ChatMsg){
-        viewModelScope.launch {
-            chatRoomDatabase.withTransaction {
-                chatRoomDatabase.chatMessageDao().insertAll(*messages)
-            }
-        }
-    }
-
-    fun getMyTodos() {
-        viewModelScope.launch {
-            repositoryManager.todoRepository.getTodoList()
+            repositoryManager.chatMessageRepository.addMessageList(
+                chatRoomMessage.userID,
+                chatRoomMessage.message,
+                chatRoomMessage.messageType?.value)
                 .catch { e -> Timber.d("catkingg e $e") }
                 .collect {
                     Timber.d("catkingg $it")
-                    _getTodoListResult.postValue(it)
+                    _addMessageListResult.postValue(it)
                 }
         }
     }

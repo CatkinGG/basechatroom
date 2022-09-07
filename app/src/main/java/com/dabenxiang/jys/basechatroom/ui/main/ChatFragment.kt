@@ -79,9 +79,10 @@ class ChatFragment : Fragment(R.layout.chat_fragment) {
     fun setupListener() {
         btnSend.setOnClickListener {
             (it as ImageView).run {
+                val chatRoomMessage = ChatRoomMessage(-1,1,editChat.text.toString(),-1, ChatMessageType.TEXT, false)
+                viewModel.addMessage(chatRoomMessage)
                 this.setImageResource(R.drawable.btn_send_disable)
                 this.isEnabled = false
-                viewModel.getMyTodos()
             }
         }
     }
@@ -91,13 +92,13 @@ class ChatFragment : Fragment(R.layout.chat_fragment) {
             chatContentAdapter.submitData(viewLifecycleOwner.lifecycle, it as PagingData<ChatMessage>)
         }
 
-        viewModel.getTodoListResult.observe(viewLifecycleOwner, {
+        viewModel.addMessageListResult.observe(viewLifecycleOwner) {
             btnSend.run {
                 this.setImageResource(R.drawable.btn_send_n)
                 this.isEnabled = true
+                editChat.text.clear()
             }
-            Log.d("catkingg2 Todo", it.toString() )
-        })
+        }
     }
 
     fun setupUI() {
