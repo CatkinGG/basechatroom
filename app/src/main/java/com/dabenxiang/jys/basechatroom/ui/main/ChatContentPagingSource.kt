@@ -41,7 +41,7 @@ class ChatContentPagingSource  (
             }
 
             return LoadResult.Page(
-                data = data?.reversed()?:arrayListOf(),
+                data = data?:arrayListOf(),
                 prevKey = null,
                 nextKey = nextKey
             )

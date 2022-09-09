@@ -4,7 +4,8 @@ import com.apollographql.apollo.ApolloClient
 import com.apollographql.apollo.api.CustomTypeAdapter
 import com.apollographql.apollo.api.CustomTypeValue
 import com.dabenxiang.jys.basechatroom.model.repository.ChatMessageRepository
-import com.hasura.todo.type.CustomType
+import com.hasura.chat.type.CustomType
+
 import okhttp3.OkHttpClient
 import java.text.ParseException
 import java.text.SimpleDateFormat

@@ -13,8 +13,8 @@ import com.dabenxiang.jys.basechatroom.model.db.ChatRoomDatabase
 import com.dabenxiang.jys.basechatroom.model.manager.RepositoryManager
 import com.dabenxiang.jys.basechatroom.ui.main.ChatContentPagingSource.Companion.NETWORK_PAGE_SIZE
 import com.dabenxiang.jys.basechatroom.ui.main.enums.ChatMessageType
-import com.hasura.todo.AddMessageListMutation
-import com.hasura.todo.GetAllMessageListQuery
+import com.dabenxiang.jys.basechatroom.widget.AppUtils
+import com.hasura.chat.AddMessageListMutation
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.collect
@@ -48,12 +48,12 @@ class ChatViewModel @ViewModelInject constructor(
     fun addMessage(chatRoomMessage: ChatRoomMessage){
         viewModelScope.launch {
             repositoryManager.chatMessageRepository.addMessageList(
-                chatRoomMessage.userID,
+                AppUtils.getAndroidID().hashCode(),
                 chatRoomMessage.message,
                 chatRoomMessage.messageType?.value)
                 .catch { e -> Timber.d("catkingg e $e") }
                 .collect {
-                    Timber.d("catkingg $it")
+                    Timber.d("catkingg $it + ${AppUtils.getAndroidID().hashCode()}")
                     _addMessageListResult.postValue(it)
                 }
         }

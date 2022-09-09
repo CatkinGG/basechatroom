@@ -14,6 +14,7 @@ import com.dabenxiang.jys.basechatroom.model.db.ChatMsg
 import com.dabenxiang.jys.basechatroom.ui.main.contactpicture.ContactPictureDialogFragment
 import com.dabenxiang.jys.basechatroom.ui.main.enums.ChatMessageType
 import com.dabenxiang.jys.basechatroom.ui.main.interfaces.InteractionListener
+import com.dabenxiang.jys.basechatroom.widget.AppUtils
 import com.dabenxiang.jys.chat.ChatContentFuncItem
 import com.dabenxiang.jys.chat.ChatMessage
 import dagger.hilt.android.AndroidEntryPoint
@@ -31,7 +32,7 @@ class ChatFragment : Fragment(R.layout.chat_fragment) {
 
     private val chatContentAdapter by lazy {
         val adapter = ChatContentAdapter(
-            0,
+            AppUtils.getAndroidID().hashCode(),
             ChatContentFuncItem(
                 onPictureClick = {
                     onPictureClick(it)
@@ -94,6 +95,7 @@ class ChatFragment : Fragment(R.layout.chat_fragment) {
 
         viewModel.addMessageListResult.observe(viewLifecycleOwner) {
             btnSend.run {
+                chatContentAdapter.refresh()
                 this.setImageResource(R.drawable.btn_send_n)
                 this.isEnabled = true
                 editChat.text.clear()

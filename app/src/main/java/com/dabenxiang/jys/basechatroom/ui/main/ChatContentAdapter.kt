@@ -101,7 +101,7 @@ class ChatContentAdapter(
     override fun getItemViewType(position: Int): Int {
         var viewType = super.getItemViewType(position)
         if (abs(viewType) == ChatMessageType.TRADE_RULE.value)
-            viewType = if(0 == userID) -1 * viewType else viewType
+            viewType = if(getItem(position)?.userID == userID) -1 * viewType else viewType
         return viewType
     }
 }
