@@ -6,9 +6,14 @@ import com.apollographql.apollo.api.Response
 import com.apollographql.apollo.coroutines.await
 import com.apollographql.apollo.coroutines.toFlow
 import com.apollographql.apollo.exception.ApolloException
+import com.apollographql.apollo.rx3.Rx3Apollo
+import com.apollographql.apollo.rx3.rxSubscribe
+import com.dabenxiang.jys.chat.ChatMessage
 import com.hasura.chat.AddMessageListMutation
 import com.hasura.chat.GetAllMessageListQuery
 import com.hasura.chat.GetMessageListQuery
+import com.hasura.chat.SubscriptionChatMessageSubscription
+import io.reactivex.rxjava3.core.Flowable
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
@@ -50,6 +55,19 @@ class ChatMessageRepository constructor(private val apolloClient: ApolloClient) 
     fun addMessageList(user_id: Int, message: String, message_type: Int): Flow<Response<AddMessageListMutation.Data>> {
         val mutation = AddMessageListMutation(user_id, message, message_type)
         return apolloClient.mutate(mutation).toFlow()
+            .flowOn(Dispatchers.IO)
+            .map {
+                if (it.hasErrors()) {
+                    throw ApolloException(it.errors?.get(0)?.message ?: "Error is Empty")
+                } else {
+                    return@map it
+                }
+            }
+    }
+
+    fun subscriptionChatMessage(): Flow<Response<SubscriptionChatMessageSubscription.Data>> {
+        val subscribtion = SubscriptionChatMessageSubscription()
+        return apolloClient.subscribe(subscribtion).toFlow()
             .flowOn(Dispatchers.IO)
             .map {
                 if (it.hasErrors()) {

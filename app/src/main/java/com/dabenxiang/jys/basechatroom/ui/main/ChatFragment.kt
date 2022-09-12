@@ -19,6 +19,7 @@ import com.dabenxiang.jys.chat.ChatContentFuncItem
 import com.dabenxiang.jys.chat.ChatMessage
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.chat_fragment.*
+import timber.log.Timber
 
 @AndroidEntryPoint
 class ChatFragment : Fragment(R.layout.chat_fragment) {
@@ -86,6 +87,8 @@ class ChatFragment : Fragment(R.layout.chat_fragment) {
                 this.isEnabled = false
             }
         }
+
+        viewModel.subscriptionChatMessage()
     }
 
     fun setupObserver() {
@@ -95,11 +98,18 @@ class ChatFragment : Fragment(R.layout.chat_fragment) {
 
         viewModel.addMessageListResult.observe(viewLifecycleOwner) {
             btnSend.run {
+                chatContentAdapter.isForceRefresh = true
                 chatContentAdapter.refresh()
                 this.setImageResource(R.drawable.btn_send_n)
                 this.isEnabled = true
                 editChat.text.clear()
             }
+        }
+
+        viewModel.subscriptionChatMessage.observe(viewLifecycleOwner) {
+            Timber.d("catkingg get $it")
+            chatContentAdapter.isForceRefresh = true
+            chatContentAdapter.refresh()
         }
     }
 

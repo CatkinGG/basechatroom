@@ -3,6 +3,7 @@ package com.dabenxiang.jys.basechatroom.model.manager
 import com.apollographql.apollo.ApolloClient
 import com.apollographql.apollo.api.CustomTypeAdapter
 import com.apollographql.apollo.api.CustomTypeValue
+import com.apollographql.apollo.subscription.WebSocketSubscriptionTransport
 import com.dabenxiang.jys.basechatroom.model.repository.ChatMessageRepository
 import com.hasura.chat.type.CustomType
 
@@ -15,6 +16,8 @@ class RepositoryManager(
     private val graphqlOkHttpClient: OkHttpClient
 ) {
     val domain = "https://special-louse-50.hasura.app/v1/graphql"
+
+    val subscriptionTransportFactory = WebSocketSubscriptionTransport.Factory("wss://special-louse-50.hasura.app/v1/graphql", graphqlOkHttpClient)
 
     val chatMessageRepository by lazy { ChatMessageRepository(apolloClient) }
 
@@ -40,6 +43,7 @@ class RepositoryManager(
             .serverUrl(domain)
             .okHttpClient(graphqlOkHttpClient)
             .addCustomTypeAdapter(CustomType.TIMESTAMPTZ, dateCustomTypeAdapter)
+            .subscriptionTransportFactory(subscriptionTransportFactory)
             .build()
     }
 }

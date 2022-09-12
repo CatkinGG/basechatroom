@@ -50,3 +50,14 @@ mutation addMessageList($user_id: Int!, $message: String!, $message_type: Int!) 
     }
 }
 
+subscription subscriptionChatMessage{
+    chat_message(limit: 1, order_by: [{create_at: desc}]){
+        id
+        user_id
+        message
+        create_at
+        message_type
+        is_read
+    }
+}
+

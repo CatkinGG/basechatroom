@@ -15,6 +15,8 @@ import com.dabenxiang.jys.basechatroom.ui.main.ChatContentPagingSource.Companion
 import com.dabenxiang.jys.basechatroom.ui.main.enums.ChatMessageType
 import com.dabenxiang.jys.basechatroom.widget.AppUtils
 import com.hasura.chat.AddMessageListMutation
+import com.hasura.chat.SubscriptionChatMessageSubscription
+import io.reactivex.rxjava3.schedulers.Schedulers
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.collect
@@ -29,6 +31,9 @@ class ChatViewModel @ViewModelInject constructor(
 ): ViewModel() {
     private val _addMessageListResult = MutableLiveData< Response<AddMessageListMutation.Data>>()
     val addMessageListResult: LiveData<Response<AddMessageListMutation.Data>> = _addMessageListResult
+
+    private val _subscriptionChatMessage = MutableLiveData<ChatRoomMessage>()
+    val subscriptionChatMessage: LiveData<ChatRoomMessage> = _subscriptionChatMessage
 
     private val _pagingDataViewStates by lazy {
         Pager(
@@ -55,6 +60,25 @@ class ChatViewModel @ViewModelInject constructor(
                 .collect {
                     Timber.d("catkingg $it + ${AppUtils.getAndroidID().hashCode()}")
                     _addMessageListResult.postValue(it)
+                }
+        }
+    }
+
+    fun subscriptionChatMessage(){
+        viewModelScope.launch {
+            repositoryManager.chatMessageRepository.subscriptionChatMessage()
+                .catch { e -> Timber.d("catkingg e $e") }
+                .collect {
+                    val msg = it.data?.chat_message()?.get(0)
+                    Timber.d("catkingg subscription $msg")
+                    msg?.run {
+                        _subscriptionChatMessage.postValue(
+                            ChatRoomMessage(this.id(), this.user_id(), this.message(),
+                            this.create_at()?:(System.currentTimeMillis() / 1000).toString(),
+                                ChatMessageType.fromInt(this.message_type()), this.is_read
+                            )
+                        )
+                    }
                 }
         }
     }
